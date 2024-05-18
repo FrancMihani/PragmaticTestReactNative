@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import useTheme from 'theme/useTheme'
-import useStyles from 'components/headers/ListHeader/Header.styles'
+import useStyles from 'components/headers/MainHeader/Header.styles'
 import { Image, StatusBar, View, ViewProps } from 'react-native'
 import { Title } from 'components/text/Title'
 import { profileImage } from 'assets/images'

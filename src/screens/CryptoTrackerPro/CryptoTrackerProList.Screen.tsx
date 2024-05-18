@@ -1,9 +1,9 @@
 import React from 'react'
-import { ListHeader } from 'components/headers/ListHeader'
+import { MainHeader } from 'components/headers/MainHeader'
 
 const CryptoTrackerProListScreen = () => (
   <>
-    <ListHeader title="CryptoTracker Pro" />
+    <MainHeader title="CryptoTracker Pro" />
   </>
 )
 
