@@ -1,11 +1,10 @@
 import React from 'react'
-import { SafeAreaView } from 'react-native'
-import { Title } from 'components/text/Title'
+import { ListHeader } from 'components/headers/ListHeader'
 
 const CryptoTrackerProListScreen = () => (
-  <SafeAreaView>
-    <Title>Test</Title>
-  </SafeAreaView>
+  <>
+    <ListHeader title="test" />
+  </>
 )
 
 export default CryptoTrackerProListScreen
