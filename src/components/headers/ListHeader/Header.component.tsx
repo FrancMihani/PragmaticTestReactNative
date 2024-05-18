@@ -1,8 +1,9 @@
 import React from 'react'
-import { StatusBar, View, ViewProps } from 'react-native'
-import { Title } from 'components/text/Title'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import useStyles from 'styles/useStyles'
 import useTheme from 'theme/useTheme'
+import { StatusBar, View, ViewProps } from 'react-native'
+import { Title } from 'components/text/Title'
 
 type Props = ViewProps & { title: string }
 
@@ -12,7 +13,8 @@ export enum BAR_STYLE {
 }
 
 export const HeaderComponent = (props: Props) => {
-  const { colors, isDarkMode, edgeInsets } = useTheme()
+  const edgeInsets = useSafeAreaInsets()
+  const { colors, isDarkMode } = useTheme()
   const styles = useStyles({
     container: { backgroundColor: colors.primary },
     content: { marginTop: edgeInsets.top, justifyContent: 'center', flex: 1, paddingHorizontal: 20 },
@@ -24,7 +26,7 @@ export const HeaderComponent = (props: Props) => {
       <StatusBar
         backgroundColor="transparent"
         translucent
-        barStyle={isDarkMode ? BAR_STYLE.LightContent : BAR_STYLE.DarkContent}
+        barStyle={isDarkMode ? BAR_STYLE.DarkContent : BAR_STYLE.LightContent}
       />
       <View style={styles.content}>
         <Title style={styles.title}>{props.title}</Title>
