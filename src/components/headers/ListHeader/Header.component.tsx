@@ -15,18 +15,19 @@ export const HeaderComponent = (props: Props) => {
   const { colors, isDarkMode, edgeInsets } = useTheme()
   const styles = useStyles({
     container: { backgroundColor: colors.primary },
-    content: { marginTop: edgeInsets.top },
+    content: { marginTop: edgeInsets.top, justifyContent: 'center', flex: 1, paddingHorizontal: 20 },
+    title: { color: colors.surface },
   })
 
   return (
-    <View {...props} style={[{ height: edgeInsets.top + 50 }, styles.container, props.style]}>
+    <View {...props} style={[{ height: edgeInsets.top + 100 }, styles.container, props.style]}>
       <StatusBar
         backgroundColor="transparent"
         translucent
         barStyle={isDarkMode ? BAR_STYLE.LightContent : BAR_STYLE.DarkContent}
       />
       <View style={styles.content}>
-        <Title>{props.title}</Title>
+        <Title style={styles.title}>{props.title}</Title>
       </View>
     </View>
   )

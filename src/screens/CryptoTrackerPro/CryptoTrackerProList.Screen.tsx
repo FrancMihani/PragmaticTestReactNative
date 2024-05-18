@@ -3,7 +3,7 @@ import { ListHeader } from 'components/headers/ListHeader'
 
 const CryptoTrackerProListScreen = () => (
   <>
-    <ListHeader title="test" />
+    <ListHeader title="CryptoTracker Pro" />
   </>
 )
 
