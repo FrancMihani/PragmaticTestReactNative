@@ -1,1 +1,1 @@
-export { TextInputComponent as TextInput } from './TextInput.component.tsx'
+export { TextInputComponent as TextInput } from './TextInput.component'

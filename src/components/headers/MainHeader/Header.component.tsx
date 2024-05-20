@@ -5,13 +5,9 @@ import useStyles from 'components/headers/MainHeader/Header.styles'
 import { Image, StatusBar, View, ViewProps } from 'react-native'
 import { Title } from 'components/text/Title'
 import { profileImage } from 'assets/images'
+import { BAR_STYLE } from 'types/enums'
 
 type Props = ViewProps & { title: string }
-
-export enum BAR_STYLE {
-  LightContent = 'light-content',
-  DarkContent = 'dark-content',
-}
 
 export const HeaderComponent = (props: Props) => {
   const edgeInsets = useSafeAreaInsets()
