@@ -7,6 +7,7 @@ import { TextButton } from 'components/buttons/TextButton'
 import { TextInput } from 'components/TextInput'
 
 import { PropsFor } from 'navigation/types'
+import { SubmitButton } from '../../components/buttons/SubmitButton'
 
 const CryptoTrackerProFormScreen = ({ navigation }: PropsFor<'CryptoTrackerProListScreen'>) => {
   const { colors } = useTheme()
@@ -16,6 +17,7 @@ const CryptoTrackerProFormScreen = ({ navigation }: PropsFor<'CryptoTrackerProLi
     container: { justifyContent: 'center', height: '80%' },
     title: { color: colors.onSurface },
     textInput: { marginVertical: 20 },
+    submitButton: { marginLeft: 'auto' },
   })
 
   const [value, setValue] = useState('')
@@ -33,6 +35,7 @@ const CryptoTrackerProFormScreen = ({ navigation }: PropsFor<'CryptoTrackerProLi
           onChangeText={setValue}
           placeholder="  Use a name or ticker symbol..."
         />
+        <SubmitButton style={styles.submitButton}>Add</SubmitButton>
       </View>
     </SafeAreaView>
   )
