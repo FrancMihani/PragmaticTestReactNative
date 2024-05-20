@@ -8,8 +8,8 @@ export const ButtonComponent = (props: TextProps) => {
   const styles = useStyles()
 
   return (
-    <TouchableOpacity style={styles.container} onPress={props.onPress}>
-      <Text {...props} style={styles.text} onPress={undefined} />
+    <TouchableOpacity style={[styles.container, props.style]} onPress={props.onPress}>
+      <Text {...props} style={[styles.text, props.style]} onPress={undefined} />
     </TouchableOpacity>
   )
 }
