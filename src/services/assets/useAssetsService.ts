@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import messariClient from 'clients/messariClient'
-import type {} from 'services/assets/types'
+import type { AssetDTO, AssetMetricsDTO } from 'services/assets/types'
 
 const useAssetsService = () => {
   const queryClient = useQueryClient()
@@ -9,7 +9,7 @@ const useAssetsService = () => {
     useQuery(
       {
         queryKey: [`/assets/${slug}`, slug],
-        queryFn: ({}) => messariClient().get<StatusResponse>(`/assets/${slug}`),
+        queryFn: ({}) => messariClient().get<StatusResponse<AssetDTO>>(`/assets/${slug}`),
       },
       queryClient,
     )
@@ -18,7 +18,7 @@ const useAssetsService = () => {
     useQuery(
       {
         queryKey: [`/assets/${slug}/metrics`, slug],
-        queryFn: ({}) => messariClient().get<StatusResponse>(`/assets/${slug}/metrics`),
+        queryFn: ({}) => messariClient().get<StatusResponse<AssetMetricsDTO>>(`/assets/${slug}/metrics`),
       },
       queryClient,
     )
