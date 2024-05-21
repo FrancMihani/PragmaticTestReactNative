@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import useStyles from 'styles/useStyles'
 import useTheme from 'theme/useTheme'
 import useDebounce from 'hooks/useDebounce'
+import useAssets from 'store/selectors/useAssets'
 import useAssetsService from 'services/assets/useAssetsService'
 import { SafeAreaView, StatusBar, View } from 'react-native'
 import { Title } from 'components/text/Title'
@@ -23,6 +24,7 @@ const CryptoTrackerProFormScreen = ({ navigation }: PropsFor<'CryptoTrackerProLi
     submitButton: { marginLeft: 'auto' },
   })
 
+  const assets = useAssets()
   const [value, setValue] = useState('')
   const slug = useDebounce(value)
   const { data, isPending, isError } = useAssetsService().useFindOne(slug)
