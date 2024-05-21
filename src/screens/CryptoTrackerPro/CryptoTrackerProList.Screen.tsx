@@ -3,7 +3,7 @@ import { MainHeader } from 'components/headers/MainHeader'
 import { FlatList, Text } from 'react-native'
 import { TextButton } from 'components/buttons/TextButton'
 import { PropsFor } from 'navigation/types'
-import useAssets from 'store/selectors/useAssets'
+import useAssets from 'store/hooks/useAssets'
 
 const CryptoTrackerProListScreen = ({ navigation }: PropsFor<'CryptoTrackerProListScreen'>) => {
   const { assets } = useAssets()
