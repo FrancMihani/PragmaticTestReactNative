@@ -6,7 +6,7 @@ import useStyles from 'styles/useStyles'
 import { Alert, Image, Pressable, Text, View } from 'react-native'
 import { Title } from 'components/text/Title'
 import { circle } from 'styles'
-import { goingDownImage, goingUpImage } from '../../../assets/images'
+import { goingDownImage, goingUpImage } from 'assets/images'
 
 type Props = { asset: string }
 
