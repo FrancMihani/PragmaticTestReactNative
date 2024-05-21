@@ -1,3 +1,3 @@
 export type Root = {
-  assets: Array<string>
+  assets: string
 }

@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Root } from 'store/types'
 
 export const counterSlice = createSlice({
   name: 'assets',
-  initialState: [] as Array<string>,
+  initialState: '' as Root['assets'],
   reducers: {
     addAsset: (state, action: PayloadAction<string>) => {
-      state = [...state, action.payload]
+      state += action.payload
     },
     removeAsset: (state, action: PayloadAction<string>) => {
-      state = state.filter(item => item === action.payload)
+      state = state.replace(action.payload, '')
     },
   },
 })
