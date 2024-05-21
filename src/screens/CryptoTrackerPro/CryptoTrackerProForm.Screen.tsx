@@ -22,10 +22,10 @@ const CryptoTrackerProFormScreen = ({ navigation }: PropsFor<'CryptoTrackerProLi
     textInput: { marginVertical: 20 },
     submitButton: { marginLeft: 'auto' },
   })
-  const [asset, setAsset] = useState('')
+
   const [value, setValue] = useState('')
   const slug = useDebounce(value)
-  const { data, isPending, refetch } = useAssetsService().useFindOne(slug)
+  const { data, isPending, isError } = useAssetsService().useFindOne(slug)
 
   return (
     <>
@@ -46,7 +46,9 @@ const CryptoTrackerProFormScreen = ({ navigation }: PropsFor<'CryptoTrackerProLi
             onChangeText={setValue}
             placeholder="  Use a name or ticker symbol..."
           />
-          <SubmitButton style={styles.submitButton}>Add</SubmitButton>
+          <SubmitButton disabled={isPending || isError} style={styles.submitButton}>
+            Add
+          </SubmitButton>
         </View>
       </SafeAreaView>
     </>
