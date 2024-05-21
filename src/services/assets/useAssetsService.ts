@@ -17,7 +17,7 @@ const useAssetsService = () => {
   const useFindOneMetrics = (slug: string) =>
     useQuery(
       {
-        refetchInterval: 600000,
+        refetchInterval: 60000,
         queryKey: [`/assets/${slug}/metrics`, slug],
         queryFn: ({}) => messariClient().get<StatusResponse<AssetMetricsDTO>>(`/assets/${slug}/metrics`),
       },

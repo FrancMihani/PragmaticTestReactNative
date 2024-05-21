@@ -6,6 +6,7 @@ import useStyles from 'styles/useStyles'
 import { Alert, Image, Pressable, Text, View } from 'react-native'
 import { Title } from 'components/text/Title'
 import { circle } from 'styles'
+import { goingDownImage, goingUpImage } from '../../../assets/images'
 
 type Props = { asset: string }
 
@@ -13,6 +14,10 @@ const ListItem = ({ asset }: Props) => {
   const { removeAsset } = useAssets()
   const { data } = useAssetsService().useFindOneMetrics(asset)
   const item = useMemo(() => data?.data?.data, [data?.data?.data])
+  const isGoingUp = useMemo(
+    () => (item?.market_data.percent_change_usd_last_24_hours || 0) > 0,
+    [item?.market_data.percent_change_usd_last_24_hours],
+  )
 
   const { colors } = useTheme()
   const styles = useStyles({
@@ -28,7 +33,7 @@ const ListItem = ({ asset }: Props) => {
     title: { fontSize: 20, color: colors.onSurface },
     subtitle: { fontSize: 15, color: colors.outline },
     percentage: {
-      color: (item?.market_data.percent_change_usd_last_24_hours || 0) > 0 ? colors.success : colors.danger,
+      color: isGoingUp ? colors.success : colors.danger,
     },
   })
 
@@ -49,6 +54,7 @@ const ListItem = ({ asset }: Props) => {
       <View style={styles.right}>
         <Title style={styles.title}>${item?.market_data.price_usd?.toFixed(5)}</Title>
         <Text style={[styles.subtitle, styles.percentage]}>
+          <Image style={{ height: 12, width: 12 }} source={isGoingUp ? goingUpImage : goingDownImage} />
           {item?.market_data.percent_change_usd_last_24_hours?.toFixed(3)}%
         </Text>
       </View>
