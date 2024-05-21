@@ -8,9 +8,7 @@ export const assetsSlice = createSlice({
     addAsset: (state, action: PayloadAction<string>) => {
       state.push(action.payload)
     },
-    removeAsset: (state, action: PayloadAction<string>) => {
-      state = state.filter(val => val === action.payload)
-    },
+    removeAsset: (state, action: PayloadAction<string>) => state.filter(val => val !== action.payload),
   },
 })
 
