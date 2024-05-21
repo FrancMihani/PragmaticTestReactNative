@@ -4,13 +4,19 @@ import useAssetsService from 'services/assets/useAssetsService'
 import useTheme from 'theme/useTheme'
 import useStyles from 'styles/useStyles'
 import { Alert, Image, Pressable, Text, View } from 'react-native'
+import { Title } from 'components/text/Title'
 import { circle } from 'styles'
 
 type Props = { asset: string }
 
 const ListItem = ({ asset }: Props) => {
+  const { removeAsset } = useAssets()
+  const { data } = useAssetsService().useFindOneMetrics(asset)
+  const item = useMemo(() => data?.data?.data, [data?.data?.data])
+
   const { colors } = useTheme()
   const styles = useStyles({
+    image: { ...circle(50), marginRight: 10 },
     container: {
       height: 100,
       flexDirection: 'row',
@@ -18,11 +24,13 @@ const ListItem = ({ asset }: Props) => {
       borderBottomWidth: 1,
       alignItems: 'center',
     },
+    right: { marginLeft: 'auto', alignItems: 'flex-end' },
+    title: { fontSize: 20, color: colors.onSurface },
+    subtitle: { fontSize: 15, color: colors.outline },
+    percentage: {
+      color: (item?.market_data.percent_change_usd_last_24_hours || 0) > 0 ? colors.success : colors.danger,
+    },
   })
-
-  const { removeAsset } = useAssets()
-  const { data } = useAssetsService().useFindOneMetrics(asset)
-  const item = useMemo(() => data?.data?.data, [data?.data?.data])
 
   const handleRemoveAsset = useCallback(() => {
     Alert.alert('Are you sure you want to remove this asset', '', [
@@ -33,14 +41,16 @@ const ListItem = ({ asset }: Props) => {
 
   return (
     <Pressable style={styles.container} onLongPress={handleRemoveAsset}>
-      <Image style={circle(50)} source={{ uri: `https://asset-images.messari.io/images/${item?.id}/64.png?v=2` }} />
+      <Image style={styles.image} source={{ uri: `https://asset-images.messari.io/images/${item?.id}/64.png?v=2` }} />
       <View>
-        <Text>{item?.name}</Text>
-        <Text>{item?.symbol}</Text>
+        <Title style={styles.title}>{item?.name}</Title>
+        <Text style={styles.subtitle}>{item?.symbol}</Text>
       </View>
-      <View>
-        <Text>{item?.market_data.percent_change_usd_last_24_hours}</Text>
-        <Text>{item?.market_data.price_usd}</Text>
+      <View style={styles.right}>
+        <Title style={styles.title}>${item?.market_data.price_usd?.toFixed(5)}</Title>
+        <Text style={[styles.subtitle, styles.percentage]}>
+          {item?.market_data.percent_change_usd_last_24_hours?.toFixed(3)}%
+        </Text>
       </View>
     </Pressable>
   )

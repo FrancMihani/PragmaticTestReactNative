@@ -4,6 +4,8 @@ const baseColors = {
   secondary10: '#FBD24D10',
   outline: '#B7C0C6',
   outline10: '#B7C0C610',
+  success: '#0A8150',
+  danger: '#DE3617',
 }
 
 export const lightTheme = {
