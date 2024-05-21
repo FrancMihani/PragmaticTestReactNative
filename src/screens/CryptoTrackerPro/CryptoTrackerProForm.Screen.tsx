@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import useStyles from 'styles/useStyles'
 import useTheme from 'theme/useTheme'
 import useDebounce from 'hooks/useDebounce'
@@ -29,14 +29,17 @@ const CryptoTrackerProFormScreen = ({ navigation }: PropsFor<'CryptoTrackerProFo
   const slug = useDebounce(value)
   const { data, isPending, isError } = useAssetsService().useFindOne(slug)
 
-  const handleRegisterAsset = useCallback(() => {
-    const assetSymbol = data?.data?.data?.symbol
+  const assetSymbol = useMemo(
+    () => (data?.data?.data?.symbol && !assets.includes(data?.data?.data?.symbol) ? data?.data?.data?.symbol : ''),
+    [assets, data?.data?.data?.symbol],
+  )
 
-    if (assetSymbol && !assets.includes(assetSymbol)) {
-      addAsset(assetSymbol)
-      navigation.goBack()
-    }
-  }, [addAsset, assets, data?.data?.data?.symbol, navigation])
+  const handleRegisterAsset = useCallback(() => {
+    if (!assetSymbol) return
+
+    addAsset(assetSymbol)
+    navigation.goBack()
+  }, [addAsset, assetSymbol, navigation])
 
   return (
     <>
@@ -57,7 +60,10 @@ const CryptoTrackerProFormScreen = ({ navigation }: PropsFor<'CryptoTrackerProFo
             onChangeText={setValue}
             placeholder="  Use a name or ticker symbol..."
           />
-          <SubmitButton disabled={isPending || isError} style={styles.submitButton} onPress={handleRegisterAsset}>
+          <SubmitButton
+            disabled={isPending || isError || !assetSymbol}
+            style={styles.submitButton}
+            onPress={handleRegisterAsset}>
             Add
           </SubmitButton>
         </View>

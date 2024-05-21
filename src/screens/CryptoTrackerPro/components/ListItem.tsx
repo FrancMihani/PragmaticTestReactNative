@@ -1,13 +1,28 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import useAssets from 'store/hooks/useAssets'
 import useAssetsService from 'services/assets/useAssetsService'
-import { Alert, Pressable, Text } from 'react-native'
+import useTheme from 'theme/useTheme'
+import useStyles from 'styles/useStyles'
+import { Alert, Image, Pressable, Text, View } from 'react-native'
+import { circle } from 'styles'
 
 type Props = { asset: string }
 
 const ListItem = ({ asset }: Props) => {
+  const { colors } = useTheme()
+  const styles = useStyles({
+    container: {
+      height: 100,
+      flexDirection: 'row',
+      borderBottomColor: colors.outline,
+      borderBottomWidth: 1,
+      alignItems: 'center',
+    },
+  })
+
   const { removeAsset } = useAssets()
-  const { data, isPending } = useAssetsService().useFindOneMetrics(asset)
+  const { data } = useAssetsService().useFindOneMetrics(asset)
+  const item = useMemo(() => data?.data?.data, [data?.data?.data])
 
   const handleRemoveAsset = useCallback(() => {
     Alert.alert('Are you sure you want to remove this asset', '', [
@@ -17,8 +32,16 @@ const ListItem = ({ asset }: Props) => {
   }, [asset, removeAsset])
 
   return (
-    <Pressable onLongPress={handleRemoveAsset}>
-      <Text>{asset}</Text>
+    <Pressable style={styles.container} onLongPress={handleRemoveAsset}>
+      <Image style={circle(50)} source={{ uri: `https://asset-images.messari.io/images/${item?.id}/64.png?v=2` }} />
+      <View>
+        <Text>{item?.name}</Text>
+        <Text>{item?.symbol}</Text>
+      </View>
+      <View>
+        <Text>{item?.market_data.percent_change_usd_last_24_hours}</Text>
+        <Text>{item?.market_data.price_usd}</Text>
+      </View>
     </Pressable>
   )
 }
