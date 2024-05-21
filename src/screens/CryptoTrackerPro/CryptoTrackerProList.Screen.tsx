@@ -1,8 +1,7 @@
 import React from 'react'
 import useAssets from 'store/hooks/useAssets'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import useStyles from 'styles/useStyles'
-import { FlatList } from 'react-native'
+import { FlatList, SafeAreaView } from 'react-native'
 import { MainHeader } from 'components/headers/MainHeader'
 import { TextButton } from 'components/buttons/TextButton'
 import ListItem from 'screens/CryptoTrackerPro/components/ListItem'
@@ -11,8 +10,8 @@ import { PropsFor } from 'navigation/types'
 
 const CryptoTrackerProListScreen = ({ navigation }: PropsFor<'CryptoTrackerProListScreen'>) => {
   const { assets } = useAssets()
-  const { bottom } = useSafeAreaInsets()
   const styles = useStyles({
+    button: { marginBottom: 10 },
     container: { marginHorizontal: 20 },
   })
 
@@ -20,14 +19,17 @@ const CryptoTrackerProListScreen = ({ navigation }: PropsFor<'CryptoTrackerProLi
     <>
       <MainHeader title="CryptoTracker Pro" />
       <FlatList
+        showsVerticalScrollIndicator={false}
         style={styles.container}
         data={assets}
         keyExtractor={val => val}
         renderItem={({ item }) => <ListItem asset={item} />}
       />
-      <TextButton style={{ bottom }} onPress={() => navigation.navigate('CryptoTrackerProFormScreen')}>
-        + Add a Cryptocurrency
-      </TextButton>
+      <SafeAreaView>
+        <TextButton style={styles.button} onPress={() => navigation.navigate('CryptoTrackerProFormScreen')}>
+          + Add a Cryptocurrency
+        </TextButton>
+      </SafeAreaView>
     </>
   )
 }
