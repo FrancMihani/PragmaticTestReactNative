@@ -1,24 +1,31 @@
-import { combineReducers } from 'redux'
-import { configureStore } from '@reduxjs/toolkit'
-import { persistReducer, persistStore } from 'redux-persist'
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 import storage from '@react-native-async-storage/async-storage'
 
-import assetsReducer from 'store/slices/assetsSlice'
+import { reducer as assetsReducer } from 'store/slices/assetsSlice'
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  version: 1,
+  whitelist: ['assets'],
+}
 
 const reducers = combineReducers({
   assets: assetsReducer,
 })
 
-const persistConfig = {
-  key: 'root',
-  version: 1,
-  storage,
-}
+const persistedReducer = persistReducer(persistConfig, reducers)
 
 const store = configureStore({
-  reducer: persistReducer(persistConfig, reducers),
+  reducer: persistedReducer,
   devTools: false,
-  middleware: getDefaultMiddleware => getDefaultMiddleware({ thunk: true }),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 })
 
 export let persistor = persistStore(store)

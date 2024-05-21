@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Root } from 'store/types'
 
-export const counterSlice = createSlice({
+export const assetsSlice = createSlice({
   name: 'assets',
-  initialState: '' as Root['assets'],
+  initialState: [] as Root['assets'],
   reducers: {
     addAsset: (state, action: PayloadAction<string>) => {
-      state += action.payload
+      state.push(action.payload)
     },
     removeAsset: (state, action: PayloadAction<string>) => {
-      state = state.replace(action.payload, '')
+      state = state.filter(val => val === action.payload)
     },
   },
 })
 
-export const { addAsset, removeAsset } = counterSlice.actions
-
-export default counterSlice.reducer
+export const { addAsset, removeAsset } = assetsSlice.actions
+export const reducer = assetsSlice.reducer
+export default assetsSlice
