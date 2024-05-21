@@ -13,7 +13,7 @@ import { SubmitButton } from 'components/buttons/SubmitButton'
 import { BAR_STYLE } from 'types/enums'
 import { PropsFor } from 'navigation/types'
 
-const CryptoTrackerProFormScreen = ({ navigation }: PropsFor<'CryptoTrackerProListScreen'>) => {
+const CryptoTrackerProFormScreen = ({ navigation }: PropsFor<'CryptoTrackerProFormScreen'>) => {
   const { colors, isDarkMode } = useTheme()
   const styles = useStyles({
     backButton: { textAlign: 'left' },
